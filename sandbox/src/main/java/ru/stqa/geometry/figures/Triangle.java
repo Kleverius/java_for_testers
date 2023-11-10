@@ -21,7 +21,7 @@ public class Triangle {
     }
 
     public double getArea() {
-        var halfPerimeter = (this.sideA + this.sideB + this.sideC) / 2;
+        var halfPerimeter = getPerimeter() / 2;
         return Math.sqrt(halfPerimeter * (halfPerimeter - this.sideA) * (halfPerimeter - this.sideB) * (halfPerimeter - this.sideC));
     }
 
