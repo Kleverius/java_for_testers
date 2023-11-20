@@ -1,14 +1,14 @@
 package ru.stqa.geometry.figures;
 
-public class Triangle {
+public record Triangle(double sideA, double sideB, double sideC) {
 
-    private double sideA, sideB, sideC;
-
-
-    public Triangle(double sideA, double sideB, double sideC) {
-        this.sideA = sideA;
-        this.sideB = sideB;
-        this.sideC = sideC;
+    public Triangle {
+        if (sideA < 0 || sideB < 0 || sideC < 0) {
+            throw new IllegalArgumentException("Triangle side should be non-negative");
+        }
+        if ((sideA + sideB < sideC) || (sideB + sideC < sideA) || (sideA + sideC < sideB)) {
+            throw new IllegalArgumentException("The sum of the two sides of the triangle must not be less than the third side");
+        }
     }
 
     public static void printArea(Triangle area) {
