@@ -1,7 +1,6 @@
 package manager;
 
 import model.ContactData;
-import model.GroupData;
 import org.openqa.selenium.By;
 
 import java.util.ArrayList;
@@ -31,6 +30,23 @@ public class ContactHelper extends HelperBase {
         selectContact(contact);
         removeSelectedContacts();
         returnToContactsPage();
+    }
+
+    public void modifyContact(ContactData contact, ContactData modifiedContact) {
+        openContactsPage();
+        selectContact(contact);
+        initContactModification(contact);
+        fillContactForm(modifiedContact);
+        submitContactModification();
+        returnToContactsPage();
+    }
+
+    private void submitContactModification() {
+        click(By.cssSelector("input[type='submit'][value='Update']"));
+    }
+
+    private void initContactModification(ContactData contact) {
+        click(By.cssSelector(String.format("a[href='edit.php?id=%s']", contact.id())));
     }
 
     private void removeSelectedContacts() {
