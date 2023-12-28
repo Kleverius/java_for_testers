@@ -34,7 +34,6 @@ public class ContactHelper extends HelperBase {
 
     public void modifyContact(ContactData contact, ContactData modifiedContact) {
         openContactsPage();
-        selectContact(contact);
         initContactModification(contact);
         fillContactForm(modifiedContact);
         submitContactModification();
