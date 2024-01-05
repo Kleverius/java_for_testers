@@ -38,6 +38,14 @@ public class HibernateHelper extends HelperBase {
         return new GroupData("" + groupRecord.id, groupRecord.name, groupRecord.header, groupRecord.footer);
     }
 
+    private static GroupRecord convertGroup(GroupData groupdata) {
+        var id = groupdata.id();
+        if ("".equals(id)) {
+            id = "0";
+        }
+        return new GroupRecord(Integer.parseInt(id), groupdata.name(), groupdata.header(), groupdata.footer());
+    }
+
     public List<GroupData> getGroupList() {
         return convertGroupList(sessionFactory.fromSession(session -> {
             return session.createQuery("from GroupRecord", GroupRecord.class).list();
@@ -65,9 +73,54 @@ public class HibernateHelper extends HelperBase {
                 contactRecord.company);
     }
 
+    private static ContactRecord convertContact(ContactData contactData) {
+        var id = contactData.id();
+        if ("".equals(id)) {
+            id = "0";
+        }
+        return new ContactRecord(
+                Integer.parseInt(id),
+                contactData.firstName(),
+                contactData.lastName(),
+                contactData.address(),
+                contactData.homePhone(),
+                contactData.email(),
+                contactData.middleName(),
+                contactData.nickName(),
+                contactData.company());
+    }
+
     public List<ContactData> getContactList() {
         return convertContactList(sessionFactory.fromSession(session -> {
             return session.createQuery("from ContactRecord", ContactRecord.class).list();
         }));
+    }
+
+    public long getGroupCount() {
+        return sessionFactory.fromSession(session -> {
+            return session.createQuery("select count (*) from GroupRecord", Long.class).getSingleResult();
+        });
+    }
+
+    public void createGroup(GroupData groupData) {
+        sessionFactory.inSession(session -> {
+            session.getTransaction().begin();
+            session.persist(convertGroup(groupData));
+            session.getTransaction().commit();
+        });
+    }
+
+    public long getContactCount() {
+        return sessionFactory.fromSession(session -> {
+            return session.createQuery("select count (*) from ContactRecord", Long.class).getSingleResult();
+        });
+    }
+
+    public void createContact(ContactData contactData) {
+        sessionFactory.inSession(session -> {
+            session.getTransaction().begin();
+            session.persist(convertContact(contactData));
+            session.getTransaction().commit();
+        });
     }
 }

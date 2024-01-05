@@ -57,7 +57,7 @@ public class GroupCreationTests extends TestBase {
     @MethodSource("singleRandomGroup")
     public void canCreateGroup(GroupData group) {
         var oldGroups = app.hbm().getGroupList();
-        app.groups().createGroup(group);
+        app.hbm().createGroup(group);
         var newGroups = app.hbm().getGroupList();;
         Comparator<GroupData> compareById = (o1, o2) -> {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
