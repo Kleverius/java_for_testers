@@ -1,7 +1,9 @@
 package manager;
 
 import model.ContactData;
+import model.GroupData;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.Select;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,50 @@ public class ContactHelper extends HelperBase {
         fillContactForm(contact);
         submitContactCreation();
         returnToContactsPage();
+    }
+
+    public void createContactWithGroup(ContactData contact, GroupData group) {
+        initContactCreation();
+        fillContactForm(contact);
+        selectGroup(group);
+        submitContactCreation();
+        returnToContactsPage();
+    }
+
+    public void addContactToGroup(ContactData contact, GroupData group) {
+        openContactsPage();
+        selectContact(contact);
+        selectToGroup(group);
+        submitContactToGroup();
+        returnToContactsPage();
+    }
+
+    public void removeContactFromGroup(ContactData contact, GroupData group) {
+        openContactsPage();
+        selectFromGroup(group);
+        selectContact(contact);
+        submitContactFromGroup();
+        returnToContactsPage();
+    }
+
+    private void submitContactFromGroup() {
+        click(By.cssSelector("input[type='submit'][name='remove']"));
+    }
+
+    private void selectFromGroup(GroupData group) {
+        click(By.cssSelector(String.format("option[value='%s']", group.id())));
+    }
+
+    private void submitContactToGroup() {
+        click(By.cssSelector("input[type='submit'][value='Add to']"));
+    }
+
+    private void selectToGroup(GroupData group) {
+        new Select(manager.driver.findElement(By.name("to_group"))).selectByValue(group.id());
+    }
+
+    private void selectGroup(GroupData group) {
+        new Select(manager.driver.findElement(By.name("new_group"))).selectByValue(group.id());
     }
 
     public void removeContact(ContactData contact) {
