@@ -40,24 +40,52 @@ public class ContactModificationTests extends TestBase {
         if (app.hbm().getGroupCount() == 0) {
             app.hbm().createGroup(new GroupData("", "testgroup name", "testgroup header", "testgroup footer"));
         }
-        var group = app.hbm().getGroupList().get(0);
-        var oldRelated = app.hbm().getContactsInGroup(group);
-        var contactList = app.hbm().getContactList();
-        var rnd = new Random();
-        var index = rnd.nextInt(contactList.size());
-        var contact = contactList.get(index);
-        app.contacts().addContactToGroup(contact, group);
-        var newRelated = app.hbm().getContactsInGroup(group);
+        contactAndGroup result = findContactAndGroup();
+        if (result.targetContact().size() == 0) {
+            app.hbm().createGroup(new GroupData("", "testgroup name", "testgroup header", "testgroup footer"));
+            result = findContactAndGroup();
+        }
+        var contactToAdd = result.targetContact().get(0);
+        var groupToAdd = result.targetGroup().get(0);
+        var oldRelated = app.hbm().getContactsInGroup(groupToAdd);
+        app.contacts().addContactToGroup(contactToAdd, groupToAdd);
+        var newRelated = app.hbm().getContactsInGroup(groupToAdd);
         Comparator<ContactData> compareById = (o1, o2) -> {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
         };
         newRelated.sort(compareById);
         var expectedList = new ArrayList<>(oldRelated);
-        if (expectedList.size() != newRelated.size()) {
-            expectedList.add(contact);
-        }
+        expectedList.add(contactToAdd);
         expectedList.sort(compareById);
         Assertions.assertEquals(newRelated, expectedList);
+    }
+
+    private static contactAndGroup findContactAndGroup() {
+        var contactList = app.hbm().getContactList();
+        var groupList = app.hbm().getGroupList();
+        var targetContact = new ArrayList<ContactData>();
+        var targetGroup = new ArrayList<GroupData>();
+        for (var contact : contactList) {
+            for (var group : groupList) {
+                var contactsInGroup = app.hbm().getContactsInGroup(group);
+                if (contactsInGroup.size() == 0) {
+                    targetContact.add(contact);
+                    targetGroup.add(group);
+                } else {
+                    for (var index : contactsInGroup) {
+                        if (!index.equals(contact)) {
+                            targetContact.add(contact);
+                            targetGroup.add(group);
+                        }
+                    }
+                }
+            }
+        }
+        contactAndGroup result = new contactAndGroup(targetContact, targetGroup);
+        return result;
+    }
+
+    private record contactAndGroup(ArrayList<ContactData> targetContact, ArrayList<GroupData> targetGroup) {
     }
 
     @Test
