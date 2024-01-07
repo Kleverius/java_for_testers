@@ -72,11 +72,15 @@ public class ContactModificationTests extends TestBase {
                     targetContact.add(contact);
                     targetGroup.add(group);
                 } else {
+                    var result = 0;
                     for (var index : contactsInGroup) {
-                        if (!index.equals(contact)) {
-                            targetContact.add(contact);
-                            targetGroup.add(group);
+                        if (index.equals(contact)) {
+                            result = result + 1;
                         }
+                    }
+                    if (result == 0) {
+                        targetContact.add(contact);
+                        targetGroup.add(group);
                     }
                 }
             }
