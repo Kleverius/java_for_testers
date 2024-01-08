@@ -8,8 +8,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class HibernateHelper extends HelperBase {
 
@@ -27,11 +27,7 @@ public class HibernateHelper extends HelperBase {
     }
 
     static List<GroupData> convertGroupList(List<GroupRecord> groupRecords) {
-        List<GroupData> result = new ArrayList<>();
-        for (var i : groupRecords) {
-            result.add(convertGroup(i));
-        }
-        return result;
+        return groupRecords.stream().map(HibernateHelper::convertGroup).collect(Collectors.toList());
     }
 
     private static GroupData convertGroup(GroupRecord groupRecord) {
@@ -53,11 +49,7 @@ public class HibernateHelper extends HelperBase {
     }
 
     static List<ContactData> convertContactList(List<ContactRecord> contactRecords) {
-        List<ContactData> result = new ArrayList<>();
-        for (var j : contactRecords) {
-            result.add(convertContact(j));
-        }
-        return result;
+        return contactRecords.stream().map(HibernateHelper::convertContact).collect(Collectors.toList());
     }
 
     private static ContactData convertContact(ContactRecord contactRecord) {
