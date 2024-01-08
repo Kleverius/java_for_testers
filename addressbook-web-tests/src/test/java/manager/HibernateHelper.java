@@ -59,8 +59,12 @@ public class HibernateHelper extends HelperBase {
                 contactRecord.lastname,
                 contactRecord.address,
                 contactRecord.home,
-                contactRecord.email,
+                contactRecord.mobile,
+                contactRecord.work,
                 contactRecord.middlename,
+                contactRecord.email,
+                contactRecord.email2,
+                contactRecord.email3,
                 contactRecord.nickname,
                 contactRecord.company);
     }
@@ -76,8 +80,12 @@ public class HibernateHelper extends HelperBase {
                 contactData.lastName(),
                 contactData.address(),
                 contactData.homePhone(),
-                contactData.email(),
+                contactData.mobilePhone(),
+                contactData.workPhone(),
                 contactData.middleName(),
+                contactData.email(),
+                contactData.email2(),
+                contactData.email3(),
                 contactData.nickName(),
                 contactData.company());
     }

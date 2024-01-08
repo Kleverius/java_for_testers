@@ -50,7 +50,8 @@ public class ContactCreationTests extends TestBase {
         }
         // var json = Files.readString(Paths.get("contacts.json"));
         ObjectMapper mapper = new ObjectMapper();
-        var value = mapper.readValue(json, new TypeReference<List<ContactData>>() {});
+        var value = mapper.readValue(json, new TypeReference<List<ContactData>>() {
+        });
         result.addAll(value);
         return result;
     }
@@ -61,7 +62,12 @@ public class ContactCreationTests extends TestBase {
                 .withLastName(CommonFunctions.randomString(6))
                 .withAddress(CommonFunctions.randomString(7))
                 .withHomePhone(CommonFunctions.randomString(8))
-                .withEmail(CommonFunctions.randomString(9)));
+                .withMobilePhone(CommonFunctions.randomString(8))
+                .withWorkPhone(CommonFunctions.randomString(8))
+                .withEmail(CommonFunctions.randomString(9))
+                .withEmail2(CommonFunctions.randomString(9))
+                .withEmail3(CommonFunctions.randomString(9))
+        );
     }
 
     @ParameterizedTest
@@ -79,7 +85,7 @@ public class ContactCreationTests extends TestBase {
 
     public static List<ContactData> negativeContactProvider() {
         var result = new ArrayList<ContactData>(List.of(
-                new ContactData("", "My_name'", "", "", "", "","", "", "")));
+                new ContactData("", "My_name'", "", "", "", "", "", "", "", "", "", "", "")));
         return result;
     }
 

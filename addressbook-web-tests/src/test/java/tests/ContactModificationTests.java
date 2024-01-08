@@ -16,7 +16,7 @@ public class ContactModificationTests extends TestBase {
     @Test
     void canModifyContact() {
         if (app.hbm().getContactCount() == 0) {
-            app.hbm().createContact(new ContactData("", "My_name", "My_lastname", "My_address", "My_homephone", "My_email", "", "", ""));
+            app.hbm().createContact(new ContactData("", "My_name", "My_lastname", "My_address", "My_homephone", "", "", "", "My_email", "", "", "", ""));
         }
         var oldContacts = app.hbm().getContactList();
         var rnd = new Random();
@@ -32,7 +32,7 @@ public class ContactModificationTests extends TestBase {
     @Test
     void canAddContactToGroup() {
         if (app.hbm().getContactCount() == 0) {
-            app.hbm().createContact(new ContactData("", "My_name", "My_lastname", "My_address", "My_homephone", "My_email", "", "", ""));
+            app.hbm().createContact(new ContactData("", "My_name", "My_lastname", "My_address", "My_homephone", "", "", "", "My_email", "", "", "", ""));
         }
         if (app.hbm().getGroupCount() == 0) {
             app.hbm().createGroup(new GroupData("", "testgroup name", "testgroup header", "testgroup footer"));
@@ -87,7 +87,7 @@ public class ContactModificationTests extends TestBase {
     @Test
     void canRemoveContactFromGroup() {
         if (app.hbm().getContactCount() == 0) {
-            app.hbm().createContact(new ContactData("", "My_name", "My_lastname", "My_address", "My_homephone", "My_email", "", "", ""));
+            app.hbm().createContact(new ContactData("", "My_name", "My_lastname", "My_address", "My_homephone", "", "", "", "My_email", "", "", "", ""));
         }
         if (app.hbm().getGroupCount() == 0) {
             app.hbm().createGroup(new GroupData("", "testgroup name", "testgroup header", "testgroup footer"));

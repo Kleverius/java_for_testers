@@ -28,14 +28,18 @@ public class ContactRecord {
     public ContactRecord() {
     }
 
-    public ContactRecord(int id, String firstname, String lastname, String address, String home, String email, String middlename, String nickname, String company) {
+    public ContactRecord(int id, String firstname, String lastname, String address, String home, String mobile, String work, String middlename, String email, String email2, String email3, String nickname, String company) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.address = address;
         this.home = home;
-        this.email = email;
+        this.mobile = mobile;
+        this.work = work;
         this.middlename = middlename;
+        this.email = email;
+        this.email2 = email2;
+        this.email3 = email3;
         this.nickname = nickname;
         this.company = company;
     }
