@@ -14,7 +14,7 @@ public class UserRegistrationTests extends TestBase {
         var username = CommonFunctions.randomString(8);
         var password = "password";
         var email = String.format("%s@localhost", username);
-        app.jamesCli().addUser(email, password);
+        app.jamesApi().addUser(email, password);
         app.session().register(username, email);
         var messages = app.mail().receive(email, password, Duration.ofSeconds(10));
         var text = messages.get(0).content();
