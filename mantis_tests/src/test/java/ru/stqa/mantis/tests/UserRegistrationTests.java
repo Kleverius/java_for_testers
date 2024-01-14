@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ru.stqa.mantis.common.CommonFunctions;
 import ru.stqa.mantis.model.DeveloperMailUser;
+import ru.stqa.mantis.model.UserData;
 
 import java.time.Duration;
 import java.util.regex.Pattern;
@@ -17,7 +18,9 @@ public class UserRegistrationTests extends TestBase {
         var password = "password";
         var email = String.format("%s@localhost", username);
         app.jamesApi().addUser(email, password);
-        app.session().register(username, email);
+        app.rest().createUser(new UserData()
+                .withUsername(username)
+                .withEmail(email));
         var messages = app.mail().receive(email, password, Duration.ofSeconds(10));
         var text = messages.get(0).content();
         var pattern = Pattern.compile("http://\\S*");
@@ -53,8 +56,8 @@ public class UserRegistrationTests extends TestBase {
         Assertions.assertTrue(app.http().isLoggedIn());
     }
 
-    @AfterEach
-    void deleteMailUser() {
-        app.developerMail().deleteUser(user);
-    }
+//    @AfterEach
+//    void deleteMailUser() {
+//        app.developerMail().deleteUser(user);
+//    }
 }

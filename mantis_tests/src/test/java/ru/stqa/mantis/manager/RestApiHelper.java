@@ -7,7 +7,10 @@ import io.swagger.client.api.IssuesApi;
 import io.swagger.client.auth.ApiKeyAuth;
 import io.swagger.client.model.Identifier;
 import io.swagger.client.model.Issue;
+import io.swagger.client.model.User;
 import ru.stqa.mantis.model.IssueData;
+import ru.stqa.mantis.model.UserData;
+import io.swagger.client.api.UserApi;
 
 public class RestApiHelper extends HelperBase {
     public RestApiHelper(ApplicationManager manager) {
@@ -31,6 +34,20 @@ public class RestApiHelper extends HelperBase {
         IssuesApi apiInstance = new IssuesApi();
         try {
             apiInstance.issueAdd(issue);
+        } catch (ApiException e) {
+            new RuntimeException(e);
+        }
+    }
+
+    public void createUser(UserData userData) {
+        User user = new User();
+        user.setUsername(userData.username());
+        user.setPassword(userData.password());
+        user.setEmail(userData.email());
+
+        UserApi apiInstance = new UserApi();
+        try {
+            apiInstance.userAdd(user);
         } catch (ApiException e) {
             new RuntimeException(e);
         }
