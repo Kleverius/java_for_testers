@@ -3,6 +3,7 @@ package tests;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import common.CommonFunctions;
+import io.qameta.allure.Allure;
 import model.ContactData;
 import model.GroupData;
 import org.junit.jupiter.api.Assertions;
@@ -80,7 +81,9 @@ public class ContactCreationTests extends TestBase {
         var newId = extraContacts.get(0).id();
         var expectedList = new ArrayList<>(oldContacts);
         expectedList.add(contact.withId(newId));
-        Assertions.assertEquals(Set.of(newContacts), Set.of(expectedList));
+        Allure.step("Validating results", step -> {
+            Assertions.assertEquals(Set.of(newContacts), Set.of(expectedList));
+        });
     }
 
     public static List<ContactData> negativeContactProvider() {
@@ -95,7 +98,9 @@ public class ContactCreationTests extends TestBase {
         var oldContacts = app.hbm().getContactList();
         app.contacts().createContact(contact);
         var newContacts = app.hbm().getContactList();
-        Assertions.assertEquals(newContacts, oldContacts);
+        Allure.step("Validating results", step -> {
+            Assertions.assertEquals(newContacts, oldContacts);
+        });
     }
 
     @Test
@@ -122,6 +127,8 @@ public class ContactCreationTests extends TestBase {
         var expectedList = new ArrayList<>(oldRelated);
         expectedList.add(contact.withId(maxId));
         expectedList.sort(compareById);
-        Assertions.assertEquals(newRelated, expectedList);
+        Allure.step("Validating results", step -> {
+            Assertions.assertEquals(newRelated, expectedList);
+        });
     }
 }

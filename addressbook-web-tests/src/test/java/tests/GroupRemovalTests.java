@@ -35,6 +35,8 @@ public class GroupRemovalTests extends TestBase {
             app.hbm().createGroup(new GroupData("", "testgroup name", "testgroup header", "testgroup footer"));
         }
         app.groups().removeAllGroups();
-        Assertions.assertEquals(0, app.hbm().getGroupCount());
+        Allure.step("Validating results", step -> {
+            Assertions.assertEquals(0, app.hbm().getGroupCount());
+        });
     }
 }

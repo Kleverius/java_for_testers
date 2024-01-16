@@ -1,6 +1,7 @@
 package tests;
 
 import common.CommonFunctions;
+import io.qameta.allure.Allure;
 import model.ContactData;
 import model.GroupData;
 import org.junit.jupiter.api.Assertions;
@@ -26,7 +27,9 @@ public class ContactModificationTests extends TestBase {
         var newContacts = app.hbm().getContactList();
         var expectedList = new ArrayList<>(oldContacts);
         expectedList.set(index, testData.withId(oldContacts.get(index).id()));
-        Assertions.assertEquals(Set.of(newContacts), Set.of(expectedList));
+        Allure.step("Validating results", step -> {
+            Assertions.assertEquals(Set.of(newContacts), Set.of(expectedList));
+        });
     }
 
     @Test
@@ -49,7 +52,9 @@ public class ContactModificationTests extends TestBase {
         var newRelated = app.hbm().getContactsInGroup(groupToAdd);
         var expectedList = new ArrayList<>(oldRelated);
         expectedList.add(contactToAdd);
-        Assertions.assertEquals(Set.of(newRelated), Set.of(expectedList));
+        Allure.step("Validating results", step -> {
+            Assertions.assertEquals(Set.of(newRelated), Set.of(expectedList));
+        });
     }
 
     private static contactAndGroup findContactAndGroup() {
@@ -108,6 +113,8 @@ public class ContactModificationTests extends TestBase {
         newRelated.sort(compareById);
         var expectedList = new ArrayList<>(oldRelated);
         expectedList.remove(contactToRemove);
-        Assertions.assertEquals(newRelated, expectedList);
+        Allure.step("Validating results", step -> {
+            Assertions.assertEquals(newRelated, expectedList);
+        });
     }
 }

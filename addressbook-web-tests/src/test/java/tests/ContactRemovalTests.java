@@ -1,5 +1,6 @@
 package tests;
 
+import io.qameta.allure.Allure;
 import model.ContactData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,9 @@ public class ContactRemovalTests extends TestBase {
         var newContacts = app.hbm().getContactList();
         var expectedList = new ArrayList<>(oldContacts);
         expectedList.remove(index);
-        Assertions.assertEquals(newContacts, expectedList);
+        Allure.step("Validating results", step -> {
+            Assertions.assertEquals(newContacts, expectedList);
+        });
     }
 
     @Test
@@ -30,6 +33,8 @@ public class ContactRemovalTests extends TestBase {
             app.hbm().createContact(new ContactData("", "My_name", "My_lastname", "My_address", "My_homephone", "", "", "", "My_email", "", "", "", ""));
         }
         app.contacts().removeAllContacts();
-        Assertions.assertEquals(0, app.hbm().getContactCount());
+        Allure.step("Validating results", step -> {
+            Assertions.assertEquals(0, app.hbm().getContactCount());
+        });
     }
 }
